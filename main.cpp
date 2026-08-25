@@ -1,6 +1,16 @@
 #include <iostream>
 
+#include "Programa.h"
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+#if defined(_WIN32)
+    SetConsoleCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8);
+#endif
+    std::cout << "Contar frequência de palavras" << std::endl;
+    Programa programa;
+    return programa.executar();
 }
