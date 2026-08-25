@@ -39,16 +39,19 @@ void Programa::contaFrequenciaPalavras() {
 }
 
 int Programa::executar() {
-    std::cout << "Informe uma frase (Fim-de-arquivo)";
+    do {
+        std::cout << "Informe uma frase (Fim-de-arquivo termina): ";
+        m_palavras.clear();
+        m_frequencia.clear();
 
-    std::string frase;
-    std::getline(std::cin, frase);
+        std::string frase;
+        std::getline(std::cin, frase);
 
-    extrairPalavras(frase);
+        extrairPalavras(frase);
 
-    // Conta quantas vezes aparece cada palavra
-    contaFrequenciaPalavras();
+        contaFrequenciaPalavras();
 
-    exibirTabelaFrequencias();
+        exibirTabelaFrequencias();
+    } while (!std::cin.eof());
     return 0;
 }
