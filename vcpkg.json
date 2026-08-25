@@ -1,0 +1,9 @@
+{
+  "name" : "conta-frequencia-palavras",
+  "version-string" : "1.0.0",
+  "builtin-baseline" : "f3457518c19c4efdb3b9307a8bb4e27d4b989933",
+  "dependencies" : [ {
+    "name" : "boost-tokenizer",
+    "version>=" : "1.92.0"
+  } ]
+}
