@@ -46,12 +46,15 @@ int Programa::executar() {
 
         std::string frase;
         std::getline(std::cin, frase);
+        if (std::cin.eof()) {
+            break; // Sai do loop se for fim de arquivo
+        }
 
         extrairPalavras(frase);
 
         contaFrequenciaPalavras();
 
         exibirTabelaFrequencias();
-    } while (!std::cin.eof());
+    } while (true);
     return 0;
 }
