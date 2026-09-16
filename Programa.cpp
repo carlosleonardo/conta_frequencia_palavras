@@ -4,6 +4,7 @@
 
 #include "Programa.h"
 
+#include <format>
 #include <iostream>
 #include <map>
 #include <set>
@@ -27,8 +28,10 @@ void Programa::extrairPalavras(const std::string &frase) {
 
 void Programa::exibirTabelaFrequencias() const {
     std::cout << "Frequência das palavras:" << std::endl;
+    std::cout << "------------------------" << std::endl;
+    std::cout << std::format("{:<20} {:>10}\n", "Palavra", "Frequência");
     for (const auto &[palavra, count]: m_frequencia) {
-        std::cout << palavra << ": " << count << std::endl;
+        std::cout << std::format("{:<20} {:>10}\n", palavra, count);
     }
 }
 
