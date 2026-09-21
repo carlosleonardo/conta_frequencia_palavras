@@ -91,6 +91,10 @@ int Programa::executar() {
         int opcao{};
         std::cout << "Escolha uma opção: ";
         std::cin >> opcao;
+        if (std::cin.eof()) {
+            std::cout << "Fim de arquivo detectado. Saindo do programa." << std::endl;
+            break;
+        }
         if (std::cin.fail()) {
             tratarErroEntrada();
             std::cout << "Entrada inválida. Por favor, digite um número válido." << std::endl;
