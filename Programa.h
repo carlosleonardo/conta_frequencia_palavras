@@ -16,6 +16,12 @@ public:
 
     void contaFrequenciaPalavras();
 
+    bool extrairEntradaUsuario(std::string &frase);
+
+    bool extrairEntradaArquivo(std::string texto);
+
+    void tratarErroEntrada() const;
+
     int executar();
 
 private:

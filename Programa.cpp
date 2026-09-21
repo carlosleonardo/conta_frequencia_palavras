@@ -5,6 +5,7 @@
 #include "Programa.h"
 
 #include <format>
+#include <fstream>
 #include <iostream>
 #include <map>
 #include <set>
@@ -41,23 +42,82 @@ void Programa::contaFrequenciaPalavras() {
     }
 }
 
+bool Programa::extrairEntradaUsuario(std::string &frase) {
+    std::cout << "Informe uma frase (Fim-de-arquivo termina): ";
+    m_palavras.clear();
+    m_frequencia.clear();
+
+    std::getline(std::cin, frase);
+    return true;
+}
+
+bool Programa::extrairEntradaArquivo(std::string texto) {
+    std::cout << "Informe o nome do arquivo: ";
+
+    m_frequencia.clear();
+    m_palavras.clear();
+
+    std::string nomeArquivo;
+    std::cin >> nomeArquivo;
+    if (std::cin.fail()) {
+        tratarErroEntrada();
+        std::cout << "Entrada inválida. Por favor, digite um nome de arquivo válido." << std::endl;
+        return false;
+    }
+
+    std::ifstream arquivo(nomeArquivo);
+    if (!arquivo.is_open()) {
+        std::cerr << "Erro ao abrir o arquivo " << nomeArquivo << std::endl;
+        return false;
+    }
+    while (std::getline(arquivo, texto)) {
+        extrairPalavras(texto);
+    }
+    return true;
+}
+
+void Programa::tratarErroEntrada() const {
+    std::cin.clear(); // Limpa o estado de falha
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignora a entrada inválida
+}
+
 int Programa::executar() {
+    std::string frase;
     do {
-        std::cout << "Informe uma frase (Fim-de-arquivo termina): ";
-        m_palavras.clear();
-        m_frequencia.clear();
-
-        std::string frase;
-        std::getline(std::cin, frase);
-        if (std::cin.eof()) {
-            break; // Sai do loop se for fim de arquivo
+        std::cout << "--- MENU ---" << std::endl;
+        std::cout << "1. Extrair Palavras" << std::endl;
+        std::cout << "2. Ler de arquivo" << std::endl;
+        std::cout << "3. Sair" << std::endl;
+        int opcao{};
+        std::cout << "Escolha uma opção: ";
+        std::cin >> opcao;
+        if (std::cin.fail()) {
+            tratarErroEntrada();
+            std::cout << "Entrada inválida. Por favor, digite um número válido." << std::endl;
+            continue;
         }
-
+        // Limpa o buffer de entrada para evitar problemas com entradas subsequentes
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        switch (opcao) {
+            case 1:
+                if (extrairEntradaUsuario(frase)) break;
+                continue; // Volta para o menu
+            case 2: {
+                if (extrairEntradaArquivo(frase)) break;
+                continue; // Volta para o menu
+            }
+            case 3:
+                std::cout << "Saindo do programa." << std::endl;
+                return 0;
+            default:
+                std::cout << "Opção inválida. Tente novamente." << std::endl;
+        }
         extrairPalavras(frase);
 
         contaFrequenciaPalavras();
 
         exibirTabelaFrequencias();
     } while (true);
+
     return 0;
 }
