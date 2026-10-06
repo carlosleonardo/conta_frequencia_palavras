@@ -129,6 +129,7 @@ int Programa::executar() {
         contaFrequenciaPalavras();
 
         exibirTabelaFrequencias();
+        frase.clear();
     } while (true);
 
     return 0;
