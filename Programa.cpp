@@ -14,7 +14,15 @@
 #include <boost/tokenizer.hpp>
 
 void Programa::extrairPalavras(const std::string &frase) {
-    const boost::tokenizer<> tokenizer(frase);
+    auto minusculas{
+        [&frase]() {
+            std::string resultado = frase;
+            std::ranges::transform(resultado, resultado.begin(), [](unsigned char c) { return std::tolower(c); });
+            return resultado;
+        }()
+    };
+
+    const boost::tokenizer<> tokenizer(minusculas);
     const std::set<char> simbolos = {
         ' ', '.', ',', ';', ':', '!', '?', '-', '_', '(', ')', '[', ']', '{', '}', '"', '\''
     };
